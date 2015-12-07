@@ -1,0 +1,29 @@
+<config>
+    <menu>
+        <catalog>
+            <children>
+                <variations>
+                    <title>Stock Variations</title>
+                    <action>adminhtml/variations</action>
+                    <sort_order>40</sort_order>
+                </variations>
+            </children>
+        </catalog>
+    </menu>
+    <acl>
+        <resources>
+            <admin>
+                <children>
+                    <catalog>
+                        <children>
+                            <variations>
+                                <title>Stock Variations</title>
+                                <sort_order>40</sort_order>
+                            </variations>
+                        </children>
+                    </catalog>
+                </children>
+            </admin>
+        </resources>
+    </acl>
+</config>

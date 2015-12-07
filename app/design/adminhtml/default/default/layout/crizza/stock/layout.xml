@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<layout version="0.1.0">
+
+    <!-- GRID CONTAINER -->
+    <adminhtml_variations_index>
+        <reference name="content">
+            <block type="crizza_stock/adminhtml_variations" name="variations" />
+        </reference>
+    </adminhtml_variations_index>
+
+</layout>

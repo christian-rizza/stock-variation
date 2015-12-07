@@ -1,0 +1,120 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Crizza_Stock>
+            <version>0.0.1</version>
+        </Crizza_Stock>
+    </modules>
+
+    <global>
+        <blocks>
+            <crizza_stock>
+                <class>Crizza_Stock_Block</class>
+            </crizza_stock>
+        </blocks>
+        <models>
+            <crizza_stock>
+                <class>Crizza_Stock_Model</class>
+                <resourceModel>crizza_stock_resource</resourceModel>
+            </crizza_stock>
+            <crizza_stock_resource>
+                <class>Crizza_Stock_Model_Resource</class>
+                <entities>
+                    <variation_entity>
+                        <table>crizza_stock_variation_entity</table>
+                    </variation_entity>
+                </entities>
+            </crizza_stock_resource>
+        </models>
+        <resources>
+            <crizza_stock_write>
+                <connection>
+                    <use>core_write</use>
+                </connection>
+            </crizza_stock_write>
+            <crizza_stock_read>
+                <connection>
+                    <use>core_read</use>
+                </connection>
+            </crizza_stock_read>
+            <crizza_stock_setup>
+                <setup>
+                    <module>Crizza_Stock</module>
+                    <class>Crizza_Stock_Model_Entity_Setup</class>
+                </setup>
+            </crizza_stock_setup>
+        </resources>
+
+        <events>
+            <cataloginventory_stock_item_save_after>
+                <observers>
+                    <crizza_stock>
+                        <class>crizza_stock/observer</class>
+                        <method>catalogInventorySave</method>
+                    </crizza_stock>
+                </observers>
+            </cataloginventory_stock_item_save_after>
+
+            <sales_model_service_quote_submit_before>
+                <observers>
+                    <crizza_stock>
+                        <class>crizza_stock/observer</class>
+                        <method>subtractQuoteInventory</method>
+                    </crizza_stock>
+                </observers>
+            </sales_model_service_quote_submit_before>
+
+            <sales_model_service_quote_submit_failure>
+                <observers>
+                    <crizza_stock>
+                        <class>crizza_stock/observer</class>
+                        <method>revertQuoteInventory</method>
+                    </crizza_stock>
+                </observers>
+            </sales_model_service_quote_submit_failure>
+
+            <sales_order_item_cancel>
+                <observers>
+                    <crizza_stock>
+                        <class>crizza_stock/observer</class>
+                        <method>cancelOrderItem</method>
+                    </crizza_stock>
+                </observers>
+            </sales_order_item_cancel>
+
+            <sales_order_creditmemo_save_after>
+                <observers>
+                    <crizza_stock>
+                        <class>crizza_stock/observer</class>
+                        <method>refundOrderInventory</method>
+                    </crizza_stock>
+                </observers>
+            </sales_order_creditmemo_save_after>
+
+        </events>
+
+    </global>
+
+    <adminhtml>
+        <layout>
+            <updates>
+                <crizza_stock>
+                    <file>crizza/stock/layout.xml</file>
+                </crizza_stock>
+            </updates>
+        </layout>
+    </adminhtml>
+
+    <!-- ROUTERS -->
+    <admin>
+        <routers>
+            <adminhtml>
+                <args>
+                    <modules>
+                        <crizza_stock before="Mage_Adminhtml">Crizza_Stock_Adminhtml</crizza_stock>
+                    </modules>
+                </args>
+            </adminhtml>
+        </routers>
+    </admin>
+</config>
